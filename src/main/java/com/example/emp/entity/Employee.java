@@ -5,7 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.example.emp.dto.EmployeeDto;
@@ -15,9 +16,7 @@ import com.example.emp.dto.EmployeeDto;
 public class Employee {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "emp_id")
-	@SequenceGenerator(name = "emp_id", initialValue =1, allocationSize =1,sequenceName = "empid_seq")
-	@Column
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
 	@Column
@@ -25,6 +24,10 @@ public class Employee {
 
 	@Column
 	private Long mobileNo;
+	
+	@OneToOne
+	@JoinColumn(name = "designation_id", referencedColumnName = "id")
+	private Designation designation;
 
 	public Integer getId() {
 		return id;
@@ -50,12 +53,27 @@ public class Employee {
 		this.mobileNo = mobileNo;
 	}
 
+	
+	public Designation getDesignation() {
+		return designation;
+	}
+
+	public void setDesignation(Designation designation) {
+		this.designation = designation;
+	}
+
 	public EmployeeDto convertTODTO() {
 
 		EmployeeDto employeeDto = new EmployeeDto();
 		employeeDto.setId(this.getId());
+		if(this.getDesignation()!=null)
+		{
+			employeeDto.setDesignationDto(this.getDesignation().convertTODTO());
+		}
 		employeeDto.setMobileNo(this.getMobileNo());
 		employeeDto.setName(this.getName());
+		
+	
 
 		return employeeDto;
 	}

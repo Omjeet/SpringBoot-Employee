@@ -13,6 +13,10 @@ public interface EmployeeService {
 	public void addEmployee(EmployeeDto employeeDto);
 	
 	public void updateEmployee(EmployeeDto employeeDto);
+	
+	public EmployeeDto addProfile(EmployeeDto employeeDto);
+	
+	void deleteEmployee(Integer id);
 
 
 

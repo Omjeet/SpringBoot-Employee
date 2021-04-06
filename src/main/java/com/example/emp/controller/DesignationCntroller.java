@@ -32,7 +32,7 @@ public class DesignationCntroller {
 
 	}
 
-	@PostMapping
+	@PostMapping(path = "/add")
 	public void registerDesignation(@RequestBody DesignationDto designationDto) {
 
 		DesignationService.registerDesignation(designationDto);
